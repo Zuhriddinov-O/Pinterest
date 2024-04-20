@@ -5,13 +5,13 @@ import "dart:convert";
 import "package:pinterest/model/model.dart";
 
 class Api {
-  static Future<PintsResponse> getWallpapers() async {
+  static Future<PinPhotos> getWallpapers() async {
     try {
       final response =
-      await http.get(Uri.parse(Constants.baseUrl), headers: {'authorization': Constants.apiKey});
+      await http.get(Uri.parse(Constants.baseUrl), headers: {'Authorization': Constants.apiKey});
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return PintsResponse.fromJson(data);
+        return PinPhotos.fromJson(data);
       } else {
         throw Exception("Unexpected status code: " "${response.statusCode}");
       }

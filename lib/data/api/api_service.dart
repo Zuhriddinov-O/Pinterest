@@ -1,21 +1,18 @@
 import "package:dio/dio.dart" hide Headers;
 import "package:pinterest/model/model.dart";
-import "package:pretty_dio_logger/pretty_dio_logger.dart" ;
-import 'package:retrofit/retrofit.dart';
+import "package:pretty_dio_logger/pretty_dio_logger.dart";
+import "package:retrofit/retrofit.dart";
+import "package:pinterest/core/constants.dart";
 
-import "../../core/constants.dart";
-
-// part 'api_servise.g.dart';
+part 'api_service.g.dart';
 
 @RestApi()
 abstract class DioApiService {
-  // factory DioApiService(Dio dio, {String baseUrl}) = _ApiService;
+  factory DioApiService(Dio dio, {String baseUrl}) = _DioApiService;
 
-  @Headers({
-    "Authorization": Constants.apiKey
-  })
+  @Headers({"Authorization": Constants.apiKey})
   @GET("/photos")
-  Future<PintsResponse> getPhotos();
+  Future<PinPhotos> getPhotos();
 }
 
 Dio buildDioClient(String baseUrl) {

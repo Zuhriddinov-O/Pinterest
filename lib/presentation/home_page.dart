@@ -12,14 +12,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PintsResponse? pints;
+  PinPhotos? pints;
   final _api = Api.getWallpapers();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "All",
           style: TextStyle(color: CupertinoColors.white),
         ),
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         future: _api,
         builder: (context, snapshot) {
           if (snapshot.data != null) {
-            _successField(snapshot.data! as List<PintsResponse>);
+            _successField(snapshot.data! as List<PinPhotos>);
           }
           return const Center(
               child: Text("Something is wrong", style: TextStyle(color: CupertinoColors.white)));
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _successField(List<PintsResponse> pins) {
+  _successField(List<PinPhotos> pins) {
     return MasonryGridView.builder(
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemCount: pins.length,

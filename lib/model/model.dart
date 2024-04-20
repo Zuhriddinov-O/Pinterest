@@ -1,4 +1,4 @@
-class PintsResponse {
+class PinPhotos {
   String? id;
   String? slug;
   AlternativeSlugs? alternativeSlugs;
@@ -18,11 +18,10 @@ class PintsResponse {
   bool? likedByUser;
   List<Null>? currentUserCollections;
   Null? sponsorship;
-  TopicSubmissions? topicSubmissions;
   String? assetType;
   User? user;
 
-  PintsResponse(
+  PinPhotos(
       {this.id,
       this.slug,
       this.alternativeSlugs,
@@ -42,11 +41,10 @@ class PintsResponse {
       this.likedByUser,
       this.currentUserCollections,
       this.sponsorship,
-      this.topicSubmissions,
       this.assetType,
       this.user});
 
-  PintsResponse.fromJson(Map<String, dynamic> json) {
+  PinPhotos.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     slug = json['slug'];
     alternativeSlugs = json['alternative_slugs'] != null
@@ -78,9 +76,6 @@ class PintsResponse {
       });
     }
     sponsorship = json['sponsorship'];
-    topicSubmissions = json['topic_submissions'] != null
-        ? TopicSubmissions.fromJson(json['topic_submissions'])
-        : null;
     assetType = json['asset_type'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
@@ -116,9 +111,6 @@ class PintsResponse {
       data['current_user_collections'] = currentUserCollections!.map((v) => v).toList();
     }
     data['sponsorship'] = sponsorship;
-    if (topicSubmissions != null) {
-      data['topic_submissions'] = topicSubmissions!.toJson();
-    }
     data['asset_type'] = assetType;
     if (user != null) {
       data['user'] = user!.toJson();
@@ -195,38 +187,9 @@ class Urls {
   }
 }
 
-class Links {
-  String? self;
-  String? html;
-  String? download;
-  String? downloadLocation;
-
-  Links({this.self, this.html, this.download, this.downloadLocation});
-
-  Links.fromJson(Map<String, dynamic> json) {
-    self = json['self'];
-    html = json['html'];
-    download = json['download'];
-    downloadLocation = json['download_location'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['self'] = self;
-    data['html'] = html;
-    data['download'] = download;
-    data['download_location'] = downloadLocation;
-    return data;
-  }
-}
-
-class TopicSubmissions {
-  TopicSubmissions.fromJson(Map<String, dynamic> json) {}
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    return data;
-  }
+Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = Map<String, dynamic>();
+  return data;
 }
 
 class User {
@@ -236,8 +199,8 @@ class User {
   String? name;
   String? firstName;
   String? lastName;
-  String? twitterUsername;
-  Null? portfolioUrl;
+  Null? twitterUsername;
+  String? portfolioUrl;
   String? bio;
   String? location;
   Links? links;
@@ -337,6 +300,47 @@ class User {
   }
 }
 
+class Links {
+  String? self;
+  String? html;
+  String? photos;
+  String? likes;
+  String? portfolio;
+  String? following;
+  String? followers;
+
+  Links(
+      {this.self,
+      this.html,
+      this.photos,
+      this.likes,
+      this.portfolio,
+      this.following,
+      this.followers});
+
+  Links.fromJson(Map<String, dynamic> json) {
+    self = json['self'];
+    html = json['html'];
+    photos = json['photos'];
+    likes = json['likes'];
+    portfolio = json['portfolio'];
+    following = json['following'];
+    followers = json['followers'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['self'] = self;
+    data['html'] = html;
+    data['photos'] = photos;
+    data['likes'] = likes;
+    data['portfolio'] = portfolio;
+    data['following'] = following;
+    data['followers'] = followers;
+    return data;
+  }
+}
+
 class ProfileImage {
   String? small;
   String? medium;
@@ -361,8 +365,8 @@ class ProfileImage {
 
 class Social {
   String? instagramUsername;
-  Null? portfolioUrl;
-  String? twitterUsername;
+  String? portfolioUrl;
+  Null? twitterUsername;
   Null? paypalEmail;
 
   Social({this.instagramUsername, this.portfolioUrl, this.twitterUsername, this.paypalEmail});

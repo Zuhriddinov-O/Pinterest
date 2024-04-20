@@ -2,7 +2,7 @@ import 'package:pinterest/core/specific_model.dart';
 
 import '../model/model.dart';
 
-extension PinMapper on PintsResponse {
+extension PinMapper on PinPhotos {
   Pins toPin() {
     return Pins(
       name: user?.name,
@@ -11,14 +11,10 @@ extension PinMapper on PintsResponse {
       bio: user?.bio,
       blurHash: blurHash,
       color: color,
-      createdAt: createdAt,
-      description: description,
       firstName: user?.firstName,
       image: urls?.regular,
       lastName: user?.lastName,
-      promotedAt: promotedAt,
       slug: slug,
-      updatedAt: updatedAt,
       urls: urls,
       userId: user?.id,
       userName: user?.username,
