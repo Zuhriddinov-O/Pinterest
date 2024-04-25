@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinterest/presentation/saved_page.dart';
-import 'package:pinterest/presentation/search_page.dart';
+import 'package:pinterest/presentation/pages/saved_page.dart';
+import 'package:pinterest/presentation/pages/search_page.dart';
 
 import 'home_page.dart';
 import 'notification_page.dart';
@@ -24,8 +24,6 @@ class _MainPageState extends State<MainPage> with ChangeNotifier {
 
   @override
   Widget build(BuildContext context) {
-    final mediaWidth = MediaQuery.of(context).size.width;
-    final mediaHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: CupertinoColors.darkBackgroundGray,
       body: pages[pageIndex],

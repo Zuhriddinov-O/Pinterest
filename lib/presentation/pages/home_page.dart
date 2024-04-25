@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:pinterest/data/api/http_api_service.dart';
-import 'package:pinterest/model/model.dart';
+import 'package:pinterest/domain/data/model/model.dart';
+
+import '../../domain/data/repository/repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   PinPhotos? pints;
-  final _api = Api.getWallpapers();
+  final _api = DioRepositoryImpl();
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +26,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       backgroundColor: CupertinoColors.darkBackgroundGray,
-      body: FutureBuilder(
-        future: _api,
-        builder: (context, snapshot) {
-          if (snapshot.data != null) {
-            _successField(snapshot.data! as List<PinPhotos>);
-          }
-          return const Center(
-              child: Text("Something is wrong", style: TextStyle(color: CupertinoColors.white)));
-        },
-      ),
     );
   }
 
-  _successField(List<PinPhotos> pins) {
+  _successField(List<Urls> pins) {
     return MasonryGridView.builder(
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemCount: pins.length,
@@ -46,8 +37,8 @@ class _HomePageState extends State<HomePage> {
         final pin = pins[index];
         return SizedBox(
           child: Center(
-              child: Text(pin.altDescription ?? "",
-                  style: const TextStyle(color: CupertinoColors.white))),
+              child:
+                  Text(pin.full ?? "", style: const TextStyle(color: CupertinoColors.white))),
         );
       },
     );
