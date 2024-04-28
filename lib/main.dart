@@ -14,7 +14,7 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (v)=>HomeViewModel(),
+      create: (v) => HomeViewModel(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

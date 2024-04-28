@@ -1,22 +1,15 @@
 import '../domain/data/model/model.dart';
 import '../specific/specific_model.dart';
 
-extension Map on User {
+extension Map on PinPhotos {
   Pins toPin() {
     return Pins(
-      name: name,
-      id: id,
-      bio: bio,
-      firstName: firstName,
-      lastName: lastName,
-      userName: name,
-      userId: totalLikes,
-    );
-  }
-}
-
-extension PinMapperUrls on Urls {
-  PhotoUrls toUrl() {
-    return PhotoUrls(full: full);
+        name: user?.name,
+        id: id,
+        bio: user?.bio,
+        firstName: user?.firstName,
+        username: user?.username,
+        image: urls?.full,
+        assetType: assetType);
   }
 }

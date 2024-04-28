@@ -14,7 +14,7 @@ abstract class DioApiService {
 
   @Headers({"Authorization": Constants.apiKey})
   @GET("/photos")
-  Future<PinPhotos> getPhotos();
+  Future<List<PinPhotos>> getPhotos();
 }
 
 Dio buildDioClient(String baseUrl) {

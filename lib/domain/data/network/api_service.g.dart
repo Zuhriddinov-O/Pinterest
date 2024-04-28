@@ -19,7 +19,7 @@ class _DioApiService implements DioApiService {
   String? baseUrl;
 
   @override
-  Future<PinPhotos> getPhotos() async {
+  Future<List<PinPhotos>> getPhotos() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
@@ -27,23 +27,26 @@ class _DioApiService implements DioApiService {
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<PinPhotos>(Options(
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<PinPhotos>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/photos',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = PinPhotos.fromJson(_result.data!);
+            .compose(
+              _dio.options,
+              '/photos',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    var value = _result.data!
+        .map((dynamic i) => PinPhotos.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 
