@@ -47,8 +47,7 @@ class _HomePageState extends State<HomePage> {
 
   _successField(List<Pins> pins) {
     return MasonryGridView.builder(
-      gridDelegate:
-          const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemCount: pins.length,
       itemBuilder: (context, index) {
         final pin = pins[index];
@@ -57,45 +56,46 @@ class _HomePageState extends State<HomePage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: OpenContainer(
-              closedColor: CupertinoColors.darkBackgroundGray,
+                closedColor: CupertinoColors.darkBackgroundGray,
                 closedElevation: 0.0,
                 closedBuilder: (context, actions) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.network(
-                    pin.image ?? "www.pornhub.com",
-                    fit: BoxFit.fill,
-                    width: double.infinity,
-                    filterQuality: FilterQuality.high,
-                  ),
-                ],
-              );
-            }, openBuilder: (context, actions) {
-              return Scaffold(
-                backgroundColor: CupertinoColors.darkBackgroundGray,
-                body: Center(
-                  child: Column(
+                  return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.network(
-                        pin.image ?? "www.pornhub.com",
+                        pin.image ?? "Null image",
                         fit: BoxFit.fill,
                         width: double.infinity,
-                        height: MediaQuery.of(context).size.height/2,
                         filterQuality: FilterQuality.high,
                       ),
-                      Text(pin.firstName ?? "",
-                          style: const TextStyle(color: Colors.white, fontSize: 25)),
-                      Text(pin.assetType ?? "",
-                          style: const TextStyle(color: Colors.white, fontSize: 25)),
                     ],
-                  ),
-                ),
-              );
-            }),
+                  );
+                },
+                openBuilder: (context, actions) {
+                  return Scaffold(
+                    backgroundColor: CupertinoColors.darkBackgroundGray,
+                    body: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.network(
+                            pin.image ?? "www.pornhub.com",
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height / 2,
+                            filterQuality: FilterQuality.high,
+                          ),
+                          Text(pin.firstName ?? "",
+                              style: const TextStyle(color: Colors.white, fontSize: 25)),
+                          Text(pin.assetType ?? "",
+                              style: const TextStyle(color: Colors.white, fontSize: 25)),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
           ),
         );
       },
