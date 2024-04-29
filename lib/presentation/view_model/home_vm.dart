@@ -10,7 +10,6 @@ class HomeViewModel extends ChangeNotifier {
 
   void fetchAnimeList() async {
     final list = await _repo.getPhotos();
-    print("@f@@vm$list");
     pinList.addAll(list);
     print("@f@@vm$list");
     notifyListeners();

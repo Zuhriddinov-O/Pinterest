@@ -5,8 +5,8 @@ class PinPhotos {
   String? createdAt;
   String? updatedAt;
   String? promotedAt;
-  int? width;
-  int? height;
+  dynamic width;
+  dynamic height;
   String? color;
   String? blurHash;
   Urls? urls;

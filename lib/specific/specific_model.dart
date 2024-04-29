@@ -1,3 +1,5 @@
+import '../domain/data/model/model.dart';
+
 class Pins {
   String? id;
   String? username;
@@ -6,6 +8,13 @@ class Pins {
   String? bio;
   String? image;
   String? assetType;
+  String? slug;
+  String? blurHash;
+  double? wid;
+  double? heights;
+  int? likes;
+  User? user;
+
 
   Pins({
     required this.name,
@@ -15,6 +24,12 @@ class Pins {
     required this.username,
     required this.image,
     required this.assetType,
+    required this.wid,
+    required this.heights,
+    required this.slug,
+    required this.blurHash,
+    required this.likes,
+    required this.user,
   });
 
   Pins.fromJson(Map<String, dynamic> json)
@@ -24,7 +39,13 @@ class Pins {
         firstName = json["firstName"],
         image = json["image"],
         assetType = json["assetType"],
-        username = json["username"];
+        username = json["username"],
+        wid = json["wid"],
+        slug = json["slug"],
+        blurHash = json["blurHash"],
+        likes = json["likes"],
+        user = json["user"],
+        heights = json["heights"];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
@@ -35,6 +56,12 @@ class Pins {
     data["username"] = username;
     data["image"] = image;
     data["assetType"] = assetType;
+    data["wid"] = wid;
+    data["slug"] = slug;
+    data["blurHash"] = blurHash;
+    data["likes"] = likes;
+    data["user"] = user;
+    data["heights"] = heights;
     return data;
   }
 }
