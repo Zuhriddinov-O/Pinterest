@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pinterest/domain/data/comments/respository/comment_repository.dart';
 import 'package:pinterest/specific/specific_model.dart';
@@ -18,8 +20,6 @@ class HomePageDetails extends StatefulWidget {
 }
 
 class _HomePageDetailsState extends State<HomePageDetails> {
-  bool followBool = false;
-  bool saveIsActive = false;
   final _api = CommentsRepositoryImpl();
 
   @override
@@ -64,26 +64,33 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                     ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
-                              followBool == true ? Colors.grey[800] : CupertinoColors.white),
+                              widget.pins.user?.acceptedTos == true
+                                  ? Colors.grey[800]
+                                  : CupertinoColors.white),
                           foregroundColor: MaterialStatePropertyAll(
-                              followBool == false ? Colors.grey[800] : CupertinoColors.white),
+                              widget.pins.user?.acceptedTos == false
+                                  ? Colors.grey[800]
+                                  : CupertinoColors.white),
                           alignment: Alignment.center,
                           fixedSize: const MaterialStatePropertyAll(Size(120, 40))),
-                      child: Text(followBool == true ? "Following" : "Follow",
+                      child: Text(widget.pins.user?.acceptedTos == true ? "Following" : "Follow",
                           textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
                       onPressed: () {
-                        setState(() => followBool = !followBool);
-                        print(followBool);
+                        setState(
+                            () => widget.pins.user!.acceptedTos = !widget.pins.user!.acceptedTos!);
+                        print(widget.pins.user?.acceptedTos);
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            backgroundColor:
-                                followBool == true ? Colors.grey[800] : CupertinoColors.white,
+                            backgroundColor: widget.pins.user?.acceptedTos == true
+                                ? Colors.grey[800]
+                                : CupertinoColors.white,
                             content: Text(
-                              followBool == true ? "Following" : "UnFollowed",
+                              widget.pins.user?.acceptedTos == true ? "Following" : "UnFollowed",
                               style: TextStyle(
-                                color:
-                                    followBool == false ? Colors.grey[800] : CupertinoColors.white,
+                                color: widget.pins.user?.acceptedTos == false
+                                    ? Colors.grey[800]
+                                    : CupertinoColors.white,
                               ),
                             ),
                           ),
@@ -120,7 +127,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                                 onClosing: () {},
                                 builder: (context) {
                                   return SizedBox(
-                                    height: height * 0.3,
+                                    height: height * 0.5,
                                     width: width,
                                     child: FutureBuilder(
                                       future: _api.getComments(),
@@ -152,26 +159,28 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(saveIsActive == true
-                              ? Colors.grey[800]
-                              : CupertinoColors.destructiveRed),
+                          backgroundColor: MaterialStatePropertyAll(
+                              widget.pins.user?.forHire == true
+                                  ? Colors.grey[800]
+                                  : CupertinoColors.destructiveRed),
                           foregroundColor: const MaterialStatePropertyAll(CupertinoColors.white),
                           alignment: Alignment.center,
                           fixedSize: const MaterialStatePropertyAll(Size(120, 40))),
-                      child: Text(saveIsActive == true ? "Saved" : "Save",
+                      child: Text(widget.pins.user?.forHire == true ? "Saved" : "Save",
                           textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
                       onPressed: () {
-                        setState(() => saveIsActive = !saveIsActive);
-                        print(saveIsActive);
+                        setState(() => widget.pins.user?.forHire = !widget.pins.user!.forHire!);
+                        print(widget.pins.user?.forHire);
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            backgroundColor:
-                                saveIsActive == true ? Colors.grey[800] : CupertinoColors.white,
+                            backgroundColor: widget.pins.user?.forHire == true
+                                ? Colors.grey[800]
+                                : CupertinoColors.white,
                             content: Text(
-                              saveIsActive == true ? "Saved" : "Save",
+                              widget.pins.user?.forHire == true ? "Saved" : "Save",
                               style: TextStyle(
-                                color: saveIsActive == false
+                                color: widget.pins.user?.forHire == false
                                     ? Colors.grey[800]
                                     : CupertinoColors.white,
                               ),
@@ -184,7 +193,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                       onPressed: () async {
                         await Share.share("http://GitHub.com");
                       },
-                      child: Icon(Icons.share),
+                      child: const Icon(Icons.share, color: CupertinoColors.white),
                     )
                   ],
                 ),
@@ -203,30 +212,73 @@ class _HomePageDetailsState extends State<HomePageDetails> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-          child: Text("Comments", style: TextStyle(color: CupertinoColors.white)),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.03),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Expanded(
+                  child: Text("Comments", style: TextStyle(color: CupertinoColors.white))),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(widget.pins.user?.totalLikes.toString() ?? "",
+                    style: const TextStyle(color: CupertinoColors.white)),
+              ),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(CupertinoIcons.suit_heart),
+                  color: CupertinoColors.white),
+            ],
+          ),
         ),
         Divider(color: Colors.grey[800]),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.21,
+          height: MediaQuery.of(context).size.height * 0.395,
           child: ListView.builder(
             itemBuilder: (context, index) {
               final comment = com[index];
-              return ListTile(
-                leading: CircleAvatar(
-                  child: Text("${index + 1}"),
+              final cutName = comment.name!.substring(0, 1);
+              final cutMain = comment.name!.substring(2);
+              final capitalized = cutName.toUpperCase();
+              final upperCase = capitalized + cutMain;
+              return Column(children: [
+                SizedBox(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.025,
+                            right: MediaQuery.of(context).size.width * 0.025,
+                            bottom: MediaQuery.of(context).size.width * 0.05),
+                        child: CircleAvatar(
+                          child: Text(cutName),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "User: ${upperCase ?? ""}--",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: CupertinoColors.white, fontSize: 12),
+                            ),
+                            Text(
+                              comment.body ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: CupertinoColors.white, fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                title: Text(
-                  comment.body ?? "",
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: CupertinoColors.white),
-                ),
-                trailing: Text(
-                  comment.name ?? "",
-                  style: const TextStyle(color: CupertinoColors.white),
-                ),
-              );
+                Divider(color: Colors.grey[800])
+              ]);
             },
           ),
         ),
