@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:pinterest/presentation/pages/home_page_details.dart';
 import 'package:pinterest/presentation/view_model/home_vm.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   String text = "";
+  bool followBool = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +49,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  bool followBool = false;
 
   _successField(List<Pins> pins, followBool) {
     var height = MediaQuery.of(context).size.height;
@@ -91,9 +91,14 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(pin.name ?? "",
-                            style: const TextStyle(color: CupertinoColors.white),
-                            overflow: TextOverflow.visible),
+                        SizedBox(
+                          width: width/2.5,
+                          child: Text(pin.name ?? "",
+                              style: const TextStyle(color: CupertinoColors.white),
+                              overflow: pin.name!.length >= 4
+                                  ? TextOverflow.ellipsis
+                                  : TextOverflow.visible),
+                        ),
                         IconButton(
                             onPressed: () async {
                               await Share.share("https://github.com/", subject: "Github Link");
@@ -105,75 +110,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               openBuilder: (context, actions) {
-                final slug = pin.slug?.replaceAll("-", " ");
-                return Container(
-                  width: width,
-                  height: double.infinity,
-                  decoration: const BoxDecoration(color: CupertinoColors.darkBackgroundGray),
-                  child: Stack(
-                    children: [
-                      ListView(
-                        children: [
-                          Image.network(pin.image ?? "",
-                              height: height,
-                              width: width,
-                              fit: BoxFit.fill,
-                              filterQuality: FilterQuality.high),
-                          Row(
-                            children: [
-                              Text(pin.user?.username ?? "",
-                                  style: const TextStyle(color: Colors.white, fontSize: 25)),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                        followBool == true ? Colors.red : Colors.blue)),
-                                child: Text(followBool == true ? "followed" : "follow"),
-                                onPressed: () {
-                                  setState(() => followBool = !followBool);
-                                  print(followBool);
-                                },
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      AppBar(
-                        forceMaterialTransparency: true,
-                        leading: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(CupertinoIcons.back, color: CupertinoColors.white),
-                        ),
-                        actions: [
-                          IconButton(
-                            onPressed: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (context) => ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-                                  child: BottomSheet(
-                                      backgroundColor: CupertinoColors.systemGrey,
-                                      enableDrag: true,
-                                      onClosing: () {},
-                                      builder: (context) {
-                                        return SizedBox(
-                                          height: height * 0.3,
-                                          width: width,
-                                          child: const Text("Container"),
-                                        );
-                                      }),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.more_horiz, color: CupertinoColors.white),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
+                return HomePageDetails(pins: pin);
               }),
         );
       },
