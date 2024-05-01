@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pinterest/domain/data/comments/respository/comment_repository.dart';
 import 'package:pinterest/specific/specific_model.dart';
@@ -26,7 +24,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    final slug = widget.pins.slug?.replaceAll("-", " ");
+    // final slug = widget.pins.slug?.replaceAll("-", " ");
     return Scaffold(
       backgroundColor: CupertinoColors.darkBackgroundGray,
       body: Stack(
@@ -78,7 +76,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                       onPressed: () {
                         setState(
                             () => widget.pins.user!.acceptedTos = !widget.pins.user!.acceptedTos!);
-                        print(widget.pins.user?.acceptedTos);
+                        debugPrint(widget.pins.user?.acceptedTos.toString());
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -170,7 +168,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                           textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
                       onPressed: () {
                         setState(() => widget.pins.user?.forHire = !widget.pins.user!.forHire!);
-                        print(widget.pins.user?.forHire);
+                        debugPrint(widget.pins.user?.forHire.toString());
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -227,7 +225,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
               ),
               IconButton(
                   onPressed: () {},
-                  icon: Icon(CupertinoIcons.suit_heart),
+                  icon: const Icon(CupertinoIcons.suit_heart),
                   color: CupertinoColors.white),
             ],
           ),
@@ -242,43 +240,45 @@ class _HomePageDetailsState extends State<HomePageDetails> {
               final cutMain = comment.name!.substring(2);
               final capitalized = cutName.toUpperCase();
               final upperCase = capitalized + cutMain;
-              return Column(children: [
-                SizedBox(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.025,
-                            right: MediaQuery.of(context).size.width * 0.025,
-                            bottom: MediaQuery.of(context).size.width * 0.05),
-                        child: CircleAvatar(
-                          child: Text(cutName),
+              return Column(
+                children: [
+                  SizedBox(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.025,
+                              right: MediaQuery.of(context).size.width * 0.025,
+                              bottom: MediaQuery.of(context).size.width * 0.05),
+                          child: CircleAvatar(
+                            child: Text(cutName),
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "User: ${upperCase ?? ""}--",
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(color: CupertinoColors.white, fontSize: 12),
-                            ),
-                            Text(
-                              comment.body ?? "",
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(color: CupertinoColors.white, fontSize: 12),
-                            ),
-                          ],
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "User: $upperCase --",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(color: CupertinoColors.white, fontSize: 12),
+                              ),
+                              Text(
+                                comment.body ?? "",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(color: CupertinoColors.white, fontSize: 12),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Divider(color: Colors.grey[800])
-              ]);
+                  Divider(color: Colors.grey[800])
+                ],
+              );
             },
           ),
         ),

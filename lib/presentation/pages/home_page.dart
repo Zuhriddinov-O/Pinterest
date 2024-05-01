@@ -1,8 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pinterest/presentation/pages/home_page_details.dart';
@@ -51,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _successField(List<Pins> pins, followBool) {
-    var height = MediaQuery.of(context).size.height;
+    // var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return MasonryGridView.builder(
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -92,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: width/2.5,
+                          width: width / 2.5,
                           child: Text(pin.name ?? "",
                               style: const TextStyle(color: CupertinoColors.white),
                               overflow: pin.name!.length >= 4
