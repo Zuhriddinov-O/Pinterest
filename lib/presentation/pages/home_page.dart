@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    Provider.of<HomeViewModel>(context, listen: false).fetchAnimeList();
+    Provider.of<HomeViewModel>(context, listen: false).fetchAnimeList(2);
     super.initState();
   }
 

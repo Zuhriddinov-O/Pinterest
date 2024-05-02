@@ -8,8 +8,8 @@ class HomeViewModel extends ChangeNotifier {
   final DioRepository _repo = DioRepositoryImpl();
   final List<Pins> pinList = [];
 
-  void fetchAnimeList() async {
-    final list = await _repo.getPhotos();
+  void fetchAnimeList(int page) async {
+    final list = await _repo.getPhotos(page);
     pinList.addAll(list);
     print("@f@@vm$list");
     notifyListeners();

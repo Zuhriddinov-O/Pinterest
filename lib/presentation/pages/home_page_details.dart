@@ -22,6 +22,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
 
   @override
   Widget build(BuildContext context) {
+   // _api.postComments(Comments(()))
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     // final slug = widget.pins.slug?.replaceAll("-", " ");
@@ -134,9 +135,11 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                                             snapshot.data?.isNotEmpty == true) {
                                           return _successCommentField(snapshot.data ?? []);
                                         } else if (snapshot.data?.isEmpty == true) {
-                                          return const Text("Empty",
-                                              style: TextStyle(
-                                                  color: CupertinoColors.white, fontSize: 25));
+                                          return const Center(
+                                            child: Text("Empty",
+                                                style: TextStyle(
+                                                    color: CupertinoColors.white, fontSize: 25)),
+                                          );
                                         }
                                         return const Center(
                                             child: SpinKitWave(color: CupertinoColors.white));
@@ -197,6 +200,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                 ),
               ),
               Divider(color: Colors.grey[800]),
+              const Text("More to explore"),
             ],
           ),
           appBar(context)
@@ -276,7 +280,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                       ],
                     ),
                   ),
-                  Divider(color: Colors.grey[800])
+                  Divider(color: Colors.grey[800]),
                 ],
               );
             },

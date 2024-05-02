@@ -5,7 +5,6 @@ import "package:retrofit/retrofit.dart";
 
 import "../../../core/constants/constants.dart";
 
-
 part 'api_service.g.dart';
 
 @RestApi()
@@ -14,7 +13,7 @@ abstract class DioApiService {
 
   @Headers({"Authorization": Constants.apiKey})
   @GET("/photos")
-  Future<List<PinPhotos>> getPhotos();
+  Future<List<PinPhotos>> getPhotos(@Query("page") int page);
 }
 
 Dio buildDioClient(String baseUrl) {

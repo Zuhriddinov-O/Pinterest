@@ -19,9 +19,9 @@ class _DioApiService implements DioApiService {
   String? baseUrl;
 
   @override
-  Future<List<PinPhotos>> getPhotos() async {
+  Future<List<PinPhotos>> getPhotos(int page) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{
       r'Authorization': 'Client-ID CZVZPQKrG7OE_N6cP4d1hLfq5mg96XEhKkfGbUu2dR0'
     };
