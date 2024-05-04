@@ -1,9 +1,14 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest/domain/data/comments/respository/comment_repository.dart';
+import 'package:pinterest/presentation/view_model/home_vm.dart';
 import 'package:pinterest/specific/specific_model.dart';
 import 'package:pinterest/widgets/app_bar_home_details.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../domain/data/comments/model/model.dart';
@@ -21,10 +26,17 @@ class _HomePageDetailsState extends State<HomePageDetails> {
   final _api = CommentsRepositoryImpl();
 
   @override
+  void initState() {
+    Provider.of<DetailedPageViewModel>(context, listen: false).fetchAnimeList(2);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-   // _api.postComments(Comments(()))
+    // _api.postComments(Comments(()))
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    final pins = Provider.of<DetailedPageViewModel>(context).pinList;
     // final slug = widget.pins.slug?.replaceAll("-", " ");
     return Scaffold(
       backgroundColor: CupertinoColors.darkBackgroundGray,
@@ -200,12 +212,96 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                 ),
               ),
               Divider(color: Colors.grey[800]),
-              const Text("More to explore"),
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0, bottom: 8.0),
+                child: Text(
+                  "More to explore",
+                  style: TextStyle(color: CupertinoColors.white),
+                ),
+              ),
+              Container(
+                height: 400,
+                child: _successField(pins),
+              ),
             ],
           ),
           appBar(context)
         ],
       ),
+    );
+  }
+
+  _successField(List<Pins> pins) {
+    // var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    return MasonryGridView.builder(
+      gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: width <= 550
+              ? 2
+              : true && width <= 750 && width > 550
+                  ? 3
+                  : width > 750 && width <= 950
+                      ? 4
+                      : 4),
+      itemCount: pins.length,
+      itemBuilder: (context, index) {
+        final pin = pins[index];
+        return Padding(
+          padding: const EdgeInsets.only(left: 5, right: 5, bottom: 25),
+          child: OpenContainer(
+              closedColor: CupertinoColors.darkBackgroundGray,
+              closedElevation: 0.0,
+              closedBuilder: (context, actions) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                        loadingBuilder:
+                            (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes?.toDouble() != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!.toDouble()
+                                  : null);
+                        },
+                        pin.image ?? "Null image",
+                        fit: BoxFit.fill,
+                        width: double.infinity,
+                        height: pin.heights! * 0.06,
+                        filterQuality: FilterQuality.high,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: width / 2.5,
+                          child: Text(pin.name ?? "",
+                              style: const TextStyle(color: CupertinoColors.white),
+                              overflow: pin.name!.length >= 4
+                                  ? TextOverflow.ellipsis
+                                  : TextOverflow.visible),
+                        ),
+                        IconButton(
+                            onPressed: () async {
+                              await Share.share("https://github.com/", subject: "Github Link");
+                            },
+                            icon: const Icon(Icons.more_horiz, color: CupertinoColors.white))
+                      ],
+                    ),
+                  ],
+                );
+              },
+              openBuilder: (context, actions) {
+                return HomePageDetails(pins: pin);
+              }),
+        );
+      },
     );
   }
 
@@ -220,8 +316,9 @@ class _HomePageDetailsState extends State<HomePageDetails> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Expanded(
-                  child: Text("Comments", style: TextStyle(color: CupertinoColors.white))),
+              Expanded(
+                  child: Text("${com.length.toString()} comments",
+                      style: TextStyle(color: CupertinoColors.white))),
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Text(widget.pins.user?.totalLikes.toString() ?? "",

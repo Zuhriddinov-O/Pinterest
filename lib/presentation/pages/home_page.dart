@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -19,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    Provider.of<HomeViewModel>(context, listen: false).fetchAnimeList(2);
+    Provider.of<HomeViewModel>(context, listen: false).fetchAnimeList(1);
     super.initState();
   }
 
@@ -52,7 +53,14 @@ class _HomePageState extends State<HomePage> {
     // var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return MasonryGridView.builder(
-      gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: width <= 550
+              ? 2
+              : true && width <= 750 && width > 550
+                  ? 3
+                  : width > 750 && width <= 950
+                      ? 4
+                      : 4),
       itemCount: pins.length,
       itemBuilder: (context, index) {
         final pin = pins[index];
