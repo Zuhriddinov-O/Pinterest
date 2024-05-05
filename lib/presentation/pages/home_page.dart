@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pinterest/presentation/pages/home_page_details.dart';
@@ -61,7 +61,6 @@ class _HomePageState extends State<HomePage> {
                   : width > 750 && width <= 950
                       ? 4
                       : 4),
-      itemCount: pins.length,
       itemBuilder: (context, index) {
         final pin = pins[index];
         return Padding(
@@ -71,7 +70,6 @@ class _HomePageState extends State<HomePage> {
               closedElevation: 0.0,
               closedBuilder: (context, actions) {
                 return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15),
@@ -98,7 +96,13 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: width / 2.5,
+                          width: width <= 550
+                              ? width / 2.5
+                              : true && width <= 750 && width > 550
+                                  ? width / 4.3
+                                  : width > 750 && width <= 950
+                                      ? width * 0.18
+                                      : width * 0.18,
                           child: Text(pin.name ?? "",
                               style: const TextStyle(color: CupertinoColors.white),
                               overflow: pin.name!.length >= 4
@@ -120,6 +124,7 @@ class _HomePageState extends State<HomePage> {
               }),
         );
       },
+      itemCount: pins.length,
     );
   }
 }

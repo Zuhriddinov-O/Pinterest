@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -46,7 +45,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
             children: [
               Image.network(widget.pins.image ?? "",
                   height: height,
-                  width: width,
+                  width: width * 0.5,
                   fit: BoxFit.fill,
                   filterQuality: FilterQuality.high),
               Padding(
@@ -219,7 +218,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                   style: TextStyle(color: CupertinoColors.white),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 400,
                 child: _successField(pins),
               ),
@@ -280,7 +279,13 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: width / 2.5,
+                          width: width <= 550
+                              ? width / 2.5
+                              : true && width <= 750 && width > 550
+                                  ? width / 4.3
+                                  : width > 750 && width <= 950
+                                      ? width * 0.18
+                                      : width * 0.18,
                           child: Text(pin.name ?? "",
                               style: const TextStyle(color: CupertinoColors.white),
                               overflow: pin.name!.length >= 4
@@ -318,7 +323,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
             children: [
               Expanded(
                   child: Text("${com.length.toString()} comments",
-                      style: TextStyle(color: CupertinoColors.white))),
+                      style: const TextStyle(color: CupertinoColors.white))),
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Text(widget.pins.user?.totalLikes.toString() ?? "",
@@ -332,7 +337,8 @@ class _HomePageDetailsState extends State<HomePageDetails> {
           ),
         ),
         Divider(color: Colors.grey[800]),
-        SizedBox(
+        Container(
+          color: Colors.red,
           height: MediaQuery.of(context).size.height * 0.395,
           child: ListView.builder(
             itemBuilder: (context, index) {
@@ -343,7 +349,9 @@ class _HomePageDetailsState extends State<HomePageDetails> {
               final upperCase = capitalized + cutMain;
               return Column(
                 children: [
-                  SizedBox(
+                  Container(
+                    color: Colors.blue,
+                    width: MediaQuery.of(context).size.width,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -356,8 +364,9 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                             child: Text(cutName),
                           ),
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.2,
+                        Container(
+                          color: Colors.green,
+                          width: MediaQuery.of(context).size.width / 1.17,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -387,3 +396,6 @@ class _HomePageDetailsState extends State<HomePageDetails> {
     );
   }
 }
+//add other pages of photos in masonry gridview
+//search page search items by their names or user names
+//use random date time for photos in updates page
