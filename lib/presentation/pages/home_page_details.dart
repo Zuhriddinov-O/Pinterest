@@ -26,7 +26,7 @@ class _HomePageDetailsState extends State<HomePageDetails> {
 
   @override
   void initState() {
-    Provider.of<DetailedPageViewModel>(context, listen: false).fetchAnimeList(2);
+    Provider.of<DetailedPageViewModel>(context, listen: false).fetchPhotoList(2);
     super.initState();
   }
 

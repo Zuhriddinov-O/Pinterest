@@ -20,7 +20,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    Provider.of<HomeViewModel>(context, listen: false).fetchAnimeList(1);
+    Provider.of<HomeViewModel>(context, listen: false).fetchPhotoList(1);
+    Provider.of<HomeViewModel2>(context, listen: false).fetchPhotoList2(2);
     super.initState();
   }
 
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final list = Provider.of<HomeViewModel>(context).pinList;
+    final list2 = Provider.of<HomeViewModel2>(context).pinList2;
 
     return LiquidPullToRefresh(
       backgroundColor: CupertinoColors.darkBackgroundGray,
@@ -39,12 +41,17 @@ class _HomePageState extends State<HomePage> {
       onRefresh: () async {
         setState(() {
           list;
+          list2;
         });
       },
       child: Scaffold(
         appBar: AppBar(title: const Text("All", style: TextStyle(color: CupertinoColors.white))),
         backgroundColor: CupertinoColors.darkBackgroundGray,
-        body: _successField(list, followBool),
+        body: Column(
+          children: [
+            _successField(list, followBool),
+          ],
+        ),
       ),
     );
   }
@@ -52,79 +59,81 @@ class _HomePageState extends State<HomePage> {
   _successField(List<Pins> pins, followBool) {
     // var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return MasonryGridView.builder(
-      gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: width <= 550
-              ? 2
-              : true && width <= 750 && width > 550
-                  ? 3
-                  : width > 750 && width <= 950
-                      ? 4
-                      : 4),
-      itemBuilder: (context, index) {
-        final pin = pins[index];
-        return Padding(
-          padding: const EdgeInsets.only(left: 5, right: 5, bottom: 25),
-          child: OpenContainer(
-              closedColor: CupertinoColors.darkBackgroundGray,
-              closedElevation: 0.0,
-              closedBuilder: (context, actions) {
-                return Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.network(
-                        loadingBuilder:
-                            (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes?.toDouble() != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!.toDouble()
-                                  : null);
-                        },
-                        pin.image ?? "Null image",
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        height: pin.heights! * 0.06,
-                        filterQuality: FilterQuality.high,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: width <= 550
-                              ? width / 2.5
-                              : true && width <= 750 && width > 550
-                                  ? width / 4.3
-                                  : width > 750 && width <= 950
-                                      ? width * 0.18
-                                      : width * 0.18,
-                          child: Text(pin.name ?? "",
-                              style: const TextStyle(color: CupertinoColors.white),
-                              overflow: pin.name!.length >= 4
-                                  ? TextOverflow.ellipsis
-                                  : TextOverflow.visible),
+    return SizedBox(
+      child: MasonryGridView.builder(
+        gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: width <= 550
+                ? 2
+                : true && width <= 750 && width > 550
+                    ? 3
+                    : width > 750 && width <= 950
+                        ? 4
+                        : 4),
+        itemBuilder: (context, index) {
+          final pin = pins[index];
+          return Padding(
+            padding: const EdgeInsets.only(left: 5, right: 5, bottom: 25),
+            child: OpenContainer(
+                closedColor: CupertinoColors.darkBackgroundGray,
+                closedElevation: 0.0,
+                closedBuilder: (context, actions) {
+                  return Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                          loadingBuilder:
+                              (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes?.toDouble() != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!.toDouble()
+                                    : null);
+                          },
+                          pin.image ?? "Null image",
+                          fit: BoxFit.fill,
+                          width: double.infinity,
+                          height: pin.heights! * 0.06,
+                          filterQuality: FilterQuality.high,
                         ),
-                        IconButton(
-                            onPressed: () async {
-                              await Share.share("https://github.com/", subject: "Github Link");
-                            },
-                            icon: const Icon(Icons.more_horiz, color: CupertinoColors.white))
-                      ],
-                    ),
-                  ],
-                );
-              },
-              openBuilder: (context, actions) {
-                return HomePageDetails(pins: pin);
-              }),
-        );
-      },
-      itemCount: pins.length,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: width <= 550
+                                ? width / 2.5
+                                : true && width <= 750 && width > 550
+                                    ? width / 4.3
+                                    : width > 750 && width <= 950
+                                        ? width * 0.18
+                                        : width * 0.18,
+                            child: Text(pin.name ?? "",
+                                style: const TextStyle(color: CupertinoColors.white),
+                                overflow: pin.name!.length >= 4
+                                    ? TextOverflow.ellipsis
+                                    : TextOverflow.visible),
+                          ),
+                          IconButton(
+                              onPressed: () async {
+                                await Share.share("https://github.com/", subject: "Github Link");
+                              },
+                              icon: const Icon(Icons.more_horiz, color: CupertinoColors.white))
+                        ],
+                      ),
+                    ],
+                  );
+                },
+                openBuilder: (context, actions) {
+                  return HomePageDetails(pins: pin);
+                }),
+          );
+        },
+        itemCount: pins.length,
+      ),
     );
   }
 }
