@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pinterest/domain/data/repository/repository.dart';
 import 'package:pinterest/specific/specific_model.dart';
 
@@ -9,7 +9,9 @@ class HomeViewModel extends ChangeNotifier {
   void fetchPhotoList(int page) async {
     final list = await _repo.getPhotos(page);
     pinList.addAll(list);
-    print("@f@@vm$list");
+    if (kDebugMode) {
+      print("@f@@vm$list");
+    }
     notifyListeners();
   }
 }
@@ -24,14 +26,13 @@ class HomeViewModel2 extends ChangeNotifier {
   }
 }
 
-class DetailedPageViewModel extends ChangeNotifier {
+class HomeViewModel3 extends ChangeNotifier {
   final DioRepository _repo = DioRepositoryImpl();
-  final List<Pins> pinList = [];
+  final List<Pins> pinList3 = [];
 
-  void fetchPhotoList(int page) async {
-    final list = await _repo.getPhotos(page);
-    pinList.addAll(list);
-    print("@f@@vm$list");
-    notifyListeners();
+  void fetchPhotoList3(int page) async {
+    final list3 = await _repo.getPhotos(page);
+    list3.addAll(list3);
   }
 }
+

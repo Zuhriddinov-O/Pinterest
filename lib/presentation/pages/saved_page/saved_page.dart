@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinterest/presentation/pages/main_page.dart';
+import 'package:pinterest/presentation/pages/main_page/main_page.dart';
 
 class SavedPage extends StatefulWidget {
   const SavedPage({super.key});

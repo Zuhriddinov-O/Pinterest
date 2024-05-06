@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinterest/presentation/pages/saved_page.dart';
-import 'package:pinterest/presentation/pages/search_page.dart';
+import 'package:pinterest/presentation/pages/saved_page/saved_page.dart';
+import 'package:pinterest/presentation/pages/search_page/search_page.dart';
 
-import 'home_page.dart';
-import 'notification_page.dart';
+import '../home_page/home_page.dart';
+import '../notification_page/notification_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

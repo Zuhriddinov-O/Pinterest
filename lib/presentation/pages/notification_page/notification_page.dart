@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinterest/presentation/pages/inbox_notif_page.dart';
-import 'package:pinterest/presentation/pages/updates_notif_page.dart';
+import 'package:pinterest/presentation/pages/notification_page/updates_notif_page.dart';
+import 'inbox_notif_page.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});

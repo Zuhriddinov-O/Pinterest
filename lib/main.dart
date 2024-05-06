@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinterest/presentation/pages/main_page.dart';
+import 'package:pinterest/presentation/pages/main_page/main_page.dart';
 import 'package:pinterest/presentation/view_model/home_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +16,8 @@ class Main extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeViewModel()),
-        ChangeNotifierProvider(create: (context) => DetailedPageViewModel()),
-        ChangeNotifierProvider(create: (context) => HomeViewModel2())
+        ChangeNotifierProvider(create: (context) => HomeViewModel2()),
+        ChangeNotifierProvider(create: (context) => HomeViewModel3())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

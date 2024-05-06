@@ -7,10 +7,11 @@ import 'package:pinterest/domain/data/comments/respository/comment_repository.da
 import 'package:pinterest/presentation/view_model/home_vm.dart';
 import 'package:pinterest/specific/specific_model.dart';
 import 'package:pinterest/widgets/app_bar_home_details.dart';
+import 'package:pinterest/widgets/successCardField.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../domain/data/comments/model/model.dart';
+import '../../../domain/data/comments/model/model.dart';
 
 class HomePageDetails extends StatefulWidget {
   const HomePageDetails({super.key, required this.pins});
@@ -26,16 +27,17 @@ class _HomePageDetailsState extends State<HomePageDetails> {
 
   @override
   void initState() {
-    Provider.of<DetailedPageViewModel>(context, listen: false).fetchPhotoList(2);
+    Provider.of<HomeViewModel>(context, listen: false).fetchPhotoList(3);
+    Provider.of<HomeViewModel2>(context, listen: false).fetchPhotoList2(4);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // _api.postComments(Comments(()))
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    final pins = Provider.of<DetailedPageViewModel>(context).pinList;
+    final pins = Provider.of<HomeViewModel>(context).pinList;
+    final pins2 = Provider.of<HomeViewModel2>(context).pinList2;
     // final slug = widget.pins.slug?.replaceAll("-", " ");
     return Scaffold(
       backgroundColor: CupertinoColors.darkBackgroundGray,
@@ -220,93 +222,13 @@ class _HomePageDetailsState extends State<HomePageDetails> {
               ),
               SizedBox(
                 height: 400,
-                child: _successField(pins),
+                child: successField(pins, pins2, context),
               ),
             ],
           ),
           appBar(context)
         ],
       ),
-    );
-  }
-
-  _successField(List<Pins> pins) {
-    // var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
-    return MasonryGridView.builder(
-      gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: width <= 550
-              ? 2
-              : true && width <= 750 && width > 550
-                  ? 3
-                  : width > 750 && width <= 950
-                      ? 4
-                      : 4),
-      itemCount: pins.length,
-      itemBuilder: (context, index) {
-        final pin = pins[index];
-        return Padding(
-          padding: const EdgeInsets.only(left: 5, right: 5, bottom: 25),
-          child: OpenContainer(
-              closedColor: CupertinoColors.darkBackgroundGray,
-              closedElevation: 0.0,
-              closedBuilder: (context, actions) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.network(
-                        loadingBuilder:
-                            (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes?.toDouble() != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!.toDouble()
-                                  : null);
-                        },
-                        pin.image ?? "Null image",
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        height: pin.heights! * 0.06,
-                        filterQuality: FilterQuality.high,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: width <= 550
-                              ? width / 2.5
-                              : true && width <= 750 && width > 550
-                                  ? width / 4.3
-                                  : width > 750 && width <= 950
-                                      ? width * 0.18
-                                      : width * 0.18,
-                          child: Text(pin.name ?? "",
-                              style: const TextStyle(color: CupertinoColors.white),
-                              overflow: pin.name!.length >= 4
-                                  ? TextOverflow.ellipsis
-                                  : TextOverflow.visible),
-                        ),
-                        IconButton(
-                            onPressed: () async {
-                              await Share.share("https://github.com/", subject: "Github Link");
-                            },
-                            icon: const Icon(Icons.more_horiz, color: CupertinoColors.white))
-                      ],
-                    ),
-                  ],
-                );
-              },
-              openBuilder: (context, actions) {
-                return HomePageDetails(pins: pin);
-              }),
-        );
-      },
     );
   }
 
@@ -396,6 +318,5 @@ class _HomePageDetailsState extends State<HomePageDetails> {
     );
   }
 }
-//add other pages of photos in masonry gridview
 //search page search items by their names or user names
 //use random date time for photos in updates page
