@@ -54,6 +54,7 @@ dependencies:
   liquid_pull_to_refresh: ^3.0.1
   flutter_launcher_icons: ^0.13.1
   http: ^1.2.1
+  shimmer: ^3.0.0
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true

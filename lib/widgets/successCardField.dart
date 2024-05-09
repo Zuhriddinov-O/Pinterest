@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:share_plus/share_plus.dart';
 import '../presentation/pages/home_page/home_page_details.dart';
@@ -32,23 +33,22 @@ successField(List<Pins> pins, List<Pins> pins2, context) {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
+                        child: Container(
+                          decoration: const BoxDecoration(color: Color.fromARGB(100, 20, 31, 33)),
+                          child: Image.network(
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress!=null) {
+                                return  const Center(child: SpinKitWave(color: Colors.white));
+                              }
                               return child;
-                            }
-                            return CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes?.toDouble() != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!.toDouble()
-                                    : null);
-                          },
-                          pin.image ?? "Null image",
-                          fit: BoxFit.fill,
-                          width: double.infinity,
-                          height: pin.heights! * 0.06,
-                          filterQuality: FilterQuality.high,
+                            },
+                            pin.image ?? "Null image",
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                            height: pin.heights! * 0.06,
+                            filterQuality: FilterQuality.high,
+                          ),
                         ),
                       ),
                       Row(
@@ -83,23 +83,26 @@ successField(List<Pins> pins, List<Pins> pins2, context) {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes?.toDouble() != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!.toDouble()
-                                    : null);
-                          },
-                          pin2.image ?? "Null image",
-                          fit: BoxFit.fill,
-                          width: double.infinity,
-                          height: pin2.heights! * 0.06,
-                          filterQuality: FilterQuality.high,
+                        child: Container(
+                          decoration: const BoxDecoration(color: Color.fromARGB(100, 20, 31, 33)),
+                          child: Image.network(
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes?.toDouble() != null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!.toDouble()
+                                      : null);
+                            },
+                            pin2.image ?? "Null image",
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                            height: pin2.heights! * 0.06,
+                            filterQuality: FilterQuality.high,
+                          ),
                         ),
                       ),
                       Row(

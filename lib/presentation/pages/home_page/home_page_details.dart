@@ -34,11 +34,11 @@ class _HomePageDetailsState extends State<HomePageDetails> {
 
   @override
   Widget build(BuildContext context) {
+    // final slug = widget.pins.slug?.replaceAll("-", " ");
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    final pins = Provider.of<HomeViewModel>(context).pinList;
-    final pins2 = Provider.of<HomeViewModel2>(context).pinList2;
-    // final slug = widget.pins.slug?.replaceAll("-", " ");
+    final pins = Provider.of<HomeViewModel>(context,listen: true).pinList;
+    final pins2 = Provider.of<HomeViewModel2>(context,listen: true).pinList2;
     return Scaffold(
       backgroundColor: CupertinoColors.darkBackgroundGray,
       body: Stack(
