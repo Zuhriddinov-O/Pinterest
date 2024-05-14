@@ -55,6 +55,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   http: ^1.2.1
   shimmer: ^3.0.0
+  retrofit: any
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true

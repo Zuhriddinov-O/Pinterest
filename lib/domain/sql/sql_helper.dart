@@ -63,5 +63,6 @@ class SqlHelper {
     } catch (e) {
       return null;
     }
+    return null;
   }
 }

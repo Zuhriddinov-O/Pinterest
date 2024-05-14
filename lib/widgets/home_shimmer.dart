@@ -6,21 +6,21 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 import '../presentation/pages/home_page/home_page_details.dart';
 import '../specific/specific_model.dart';
+
 homeShimmerField(List<Pins> pins, List<Pins> pins2, context) {
   var width = MediaQuery.of(context).size.width;
   return Shimmer.fromColors(
-
     baseColor: CupertinoColors.systemGrey,
     highlightColor: Colors.white,
     child: MasonryGridView.builder(
       gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: width <= 550
               ? 2
-              : true && width <= 750 && width > 550
-              ? 3
-              : width > 750 && width <= 950
-              ? 4
-              : 4),
+              : width <= 750 && width > 550
+                  ? 3
+                  : width > 750 && width <= 950
+                      ? 4
+                      : 4),
       itemBuilder: (context, index) {
         final pin = pins[index];
         final pin2 = pins2[index];
@@ -37,17 +37,23 @@ homeShimmerField(List<Pins> pins, List<Pins> pins2, context) {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Container(
-                            decoration: const BoxDecoration(color: Color.fromARGB(100, 20, 31, 33)),
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(100, 20, 31, 33)),
                             child: Image.network(
-                              loadingBuilder: (BuildContext context, Widget child,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
                                   ImageChunkEvent? loadingProgress) {
                                 if (loadingProgress == null) {
                                   return child;
                                 }
                                 return CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes?.toDouble() != null
-                                        ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!.toDouble()
+                                    value: loadingProgress.expectedTotalBytes
+                                                ?.toDouble() !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                                .toDouble()
                                         : null);
                               },
                               pin.image ?? "Null image",
@@ -62,15 +68,18 @@ homeShimmerField(List<Pins> pins, List<Pins> pins2, context) {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(pin.name ?? "",
-                                style: const TextStyle(color: CupertinoColors.white),
+                                style: const TextStyle(
+                                    color: CupertinoColors.white),
                                 overflow: pin.name!.length >= 4
                                     ? TextOverflow.ellipsis
                                     : TextOverflow.visible),
                             IconButton(
                                 onPressed: () async {
-                                  await Share.share("https://github.com/", subject: "Github Link");
+                                  await Share.share("https://github.com/",
+                                      subject: "Github Link");
                                 },
-                                icon: const Icon(Icons.more_horiz, color: CupertinoColors.white))
+                                icon: const Icon(Icons.more_horiz,
+                                    color: CupertinoColors.white))
                           ],
                         ),
                       ],
@@ -91,17 +100,23 @@ homeShimmerField(List<Pins> pins, List<Pins> pins2, context) {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Container(
-                            decoration: const BoxDecoration(color: Color.fromARGB(100, 20, 31, 33)),
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(100, 20, 31, 33)),
                             child: Image.network(
-                              loadingBuilder: (BuildContext context, Widget child,
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
                                   ImageChunkEvent? loadingProgress) {
                                 if (loadingProgress == null) {
                                   return child;
                                 }
                                 return CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes?.toDouble() != null
-                                        ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!.toDouble()
+                                    value: loadingProgress.expectedTotalBytes
+                                                ?.toDouble() !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                                .toDouble()
                                         : null);
                               },
                               pin2.image ?? "Null image",
@@ -119,21 +134,24 @@ homeShimmerField(List<Pins> pins, List<Pins> pins2, context) {
                               width: width <= 550
                                   ? width / 2.5
                                   : true && width <= 750 && width > 550
-                                  ? width / 4.3
-                                  : width > 750 && width <= 950
-                                  ? width * 0.18
-                                  : width * 0.18,
+                                      ? width / 4.3
+                                      : width > 750 && width <= 950
+                                          ? width * 0.18
+                                          : width * 0.18,
                               child: Text(pin2.name ?? "",
-                                  style: const TextStyle(color: CupertinoColors.white),
+                                  style: const TextStyle(
+                                      color: CupertinoColors.white),
                                   overflow: pin2.name!.length >= 4
                                       ? TextOverflow.ellipsis
                                       : TextOverflow.visible),
                             ),
                             IconButton(
                                 onPressed: () async {
-                                  await Share.share("https://github.com/", subject: "Github Link");
+                                  await Share.share("https://github.com/",
+                                      subject: "Github Link");
                                 },
-                                icon: const Icon(Icons.more_horiz, color: CupertinoColors.white))
+                                icon: const Icon(Icons.more_horiz,
+                                    color: CupertinoColors.white))
                           ],
                         ),
                       ],
