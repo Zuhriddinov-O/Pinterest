@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinterest/presentation/pages/saved_page/saved_page.dart';
-import 'package:pinterest/presentation/pages/search_page/search_page.dart';
-
 import '../home_page/home_page.dart';
 import '../notification_page/notification_page.dart';
+import '../saved_page/saved_page.dart';
+import '../search_page/search_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -38,7 +37,6 @@ class _MainPageState extends State<MainPage> with ChangeNotifier {
         showUnselectedLabels: true,
         currentIndex: pageIndex,
         backgroundColor: CupertinoColors.darkBackgroundGray,
-
         useLegacyColorScheme: true,
         iconSize: 21,
         selectedIconTheme: const IconThemeData(size: 25),
@@ -47,21 +45,15 @@ class _MainPageState extends State<MainPage> with ChangeNotifier {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
-              backgroundColor: CupertinoColors.darkBackgroundGray,
-              icon: Icon(Icons.home_filled),
-              label: "Home"),
+              backgroundColor: CupertinoColors.darkBackgroundGray, icon: Icon(Icons.home_filled), label: "Home"),
           BottomNavigationBarItem(
-              backgroundColor: CupertinoColors.darkBackgroundGray,
-              icon: Icon(CupertinoIcons.search),
-              label: "Search"),
+              backgroundColor: CupertinoColors.darkBackgroundGray, icon: Icon(CupertinoIcons.search), label: "Search"),
           BottomNavigationBarItem(
               backgroundColor: CupertinoColors.darkBackgroundGray,
               icon: Icon(CupertinoIcons.chat_bubble_text),
               label: "Notifica..."),
           BottomNavigationBarItem(
-              backgroundColor: CupertinoColors.darkBackgroundGray,
-              icon: Icon(Icons.person),
-              label: "Saved"),
+              backgroundColor: CupertinoColors.darkBackgroundGray, icon: Icon(Icons.person), label: "Saved"),
         ],
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pinterest/presentation/view_model/home_vm.dart';
 import 'package:pinterest/widgets/home_shimmer.dart';
 import 'package:pinterest/widgets/successCardField.dart';
@@ -14,15 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isLoading = false;
+  bool isLoading = true;
 
   @override
   void initState() {
     Provider.of<HomeViewModel>(context, listen: false).fetchPhotoList(1);
     Provider.of<HomeViewModel2>(context, listen: false).fetchPhotoList2(2);
-    // Future.delayed(const Duration(seconds: 3)).then((value) {
-    //   isLoading = true;
-    // });
     super.initState();
   }
 
@@ -31,26 +27,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 4)).then((value) {
+      isLoading = false;
+      setState(() {});
+    });
     final list = Provider.of<HomeViewModel>(context, listen: true).pinList;
     final list2 = Provider.of<HomeViewModel2>(context, listen: true).pinList2;
-    return LiquidPullToRefresh(
+    return Scaffold(
+      appBar: AppBar(title: const Text("All", style: TextStyle(color: CupertinoColors.white))),
       backgroundColor: CupertinoColors.darkBackgroundGray,
-      color: Colors.white,
-      showChildOpacityTransition: true,
-      springAnimationDurationInMilliseconds: 600,
-      onRefresh: () async {
-        setState(() {
-          list;
-          list2;
-        });
-      },
-      child: Scaffold(
-        appBar: AppBar(title: const Text("All", style: TextStyle(color: CupertinoColors.white))),
-        backgroundColor: CupertinoColors.darkBackgroundGray,
-        body: list.isNotEmpty && list.isNotEmpty
-            ? successField(list, list2, context)
-           : homeShimmerField(list, list2, context),
-      ),
+      body: isLoading
+      ? homeShimmerField(list, list2, context)
+          : successField(list, list2, context)
     );
   }
 }

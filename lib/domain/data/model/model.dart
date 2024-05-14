@@ -39,7 +39,7 @@ class PinPhotos {
     id = json['id'];
     slug = json['slug'];
     alternativeSlugs = json['alternative_slugs'] != null
-        ? new AlternativeSlugs.fromJson(json['alternative_slugs'])
+        ? AlternativeSlugs.fromJson(json['alternative_slugs'])
         : null;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -48,45 +48,45 @@ class PinPhotos {
     height = json['height'];
     color = json['color'];
     blurHash = json['blur_hash'];
-    urls = json['urls'] != null ? new Urls.fromJson(json['urls']) : null;
-    links = json['links'] != null ? new Links.fromJson(json['links']) : null;
+    urls = json['urls'] != null ? Urls.fromJson(json['urls']) : null;
+    links = json['links'] != null ? Links.fromJson(json['links']) : null;
     likes = json['likes'];
     likedByUser = json['liked_by_user'];
     topicSubmissions = json['topic_submissions'] != null
-        ? new TopicSubmissions.fromJson(json['topic_submissions'])
+        ? TopicSubmissions.fromJson(json['topic_submissions'])
         : null;
     assetType = json['asset_type'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['slug'] = this.slug;
-    if (this.alternativeSlugs != null) {
-      data['alternative_slugs'] = this.alternativeSlugs!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['slug'] = slug;
+    if (alternativeSlugs != null) {
+      data['alternative_slugs'] = alternativeSlugs!.toJson();
     }
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['promoted_at'] = this.promotedAt;
-    data['width'] = this.width;
-    data['height'] = this.height;
-    data['color'] = this.color;
-    data['blur_hash'] = this.blurHash;
-    if (this.urls != null) {
-      data['urls'] = this.urls!.toJson();
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['promoted_at'] = promotedAt;
+    data['width'] = width;
+    data['height'] = height;
+    data['color'] = color;
+    data['blur_hash'] = blurHash;
+    if (urls != null) {
+      data['urls'] = urls!.toJson();
     }
-    if (this.links != null) {
-      data['links'] = this.links!.toJson();
+    if (links != null) {
+      data['links'] = links!.toJson();
     }
-    data['likes'] = this.likes;
-    data['liked_by_user'] = this.likedByUser;
-    if (this.topicSubmissions != null) {
-      data['topic_submissions'] = this.topicSubmissions!.toJson();
+    data['likes'] = likes;
+    data['liked_by_user'] = likedByUser;
+    if (topicSubmissions != null) {
+      data['topic_submissions'] = topicSubmissions!.toJson();
     }
-    data['asset_type'] = this.assetType;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    data['asset_type'] = assetType;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }
@@ -116,15 +116,15 @@ class AlternativeSlugs {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['en'] = this.en;
-    data['es'] = this.es;
-    data['ja'] = this.ja;
-    data['fr'] = this.fr;
-    data['it'] = this.it;
-    data['ko'] = this.ko;
-    data['de'] = this.de;
-    data['pt'] = this.pt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['en'] = en;
+    data['es'] = es;
+    data['ja'] = ja;
+    data['fr'] = fr;
+    data['it'] = it;
+    data['ko'] = ko;
+    data['de'] = de;
+    data['pt'] = pt;
     return data;
   }
 }
@@ -149,13 +149,13 @@ class Urls {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['raw'] = this.raw;
-    data['full'] = this.full;
-    data['regular'] = this.regular;
-    data['small'] = this.small;
-    data['thumb'] = this.thumb;
-    data['small_s3'] = this.smallS3;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['raw'] = raw;
+    data['full'] = full;
+    data['regular'] = regular;
+    data['small'] = small;
+    data['thumb'] = thumb;
+    data['small_s3'] = smallS3;
     return data;
   }
 }
@@ -176,11 +176,11 @@ class Links {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['self'] = this.self;
-    data['html'] = this.html;
-    data['download'] = this.download;
-    data['download_location'] = this.downloadLocation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['self'] = self;
+    data['html'] = html;
+    data['download'] = download;
+    data['download_location'] = downloadLocation;
     return data;
   }
 }
@@ -188,10 +188,10 @@ class Links {
 class TopicSubmissions {
   TopicSubmissions();
 
-  TopicSubmissions.fromJson(Map<String, dynamic> json) {}
+  TopicSubmissions.fromJson(Map<String, dynamic> json);
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     return data;
   }
 }
@@ -255,9 +255,9 @@ class User {
     portfolioUrl = json['portfolio_url'];
     bio = json['bio'];
     location = json['location'];
-    links = json['links'] != null ? new Links.fromJson(json['links']) : null;
+    links = json['links'] != null ? Links.fromJson(json['links']) : null;
     profileImage =
-        json['profile_image'] != null ? new ProfileImage.fromJson(json['profile_image']) : null;
+        json['profile_image'] != null ? ProfileImage.fromJson(json['profile_image']) : null;
     instagramUsername = json['instagram_username'];
     totalCollections = json['total_collections'];
     totalLikes = json['total_likes'];
@@ -267,38 +267,38 @@ class User {
     totalPromotedIllustrations = json['total_promoted_illustrations'];
     acceptedTos = json['accepted_tos'];
     forHire = json['for_hire'];
-    social = json['social'] != null ? new Social.fromJson(json['social']) : null;
+    social = json['social'] != null ? Social.fromJson(json['social']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['updated_at'] = this.updatedAt;
-    data['username'] = this.username;
-    data['name'] = this.name;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['twitter_username'] = this.twitterUsername;
-    data['portfolio_url'] = this.portfolioUrl;
-    data['bio'] = this.bio;
-    data['location'] = this.location;
-    if (this.links != null) {
-      data['links'] = this.links!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['updated_at'] = updatedAt;
+    data['username'] = username;
+    data['name'] = name;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['twitter_username'] = twitterUsername;
+    data['portfolio_url'] = portfolioUrl;
+    data['bio'] = bio;
+    data['location'] = location;
+    if (links != null) {
+      data['links'] = links!.toJson();
     }
-    if (this.profileImage != null) {
-      data['profile_image'] = this.profileImage!.toJson();
+    if (profileImage != null) {
+      data['profile_image'] = profileImage!.toJson();
     }
-    data['instagram_username'] = this.instagramUsername;
-    data['total_collections'] = this.totalCollections;
-    data['total_likes'] = this.totalLikes;
-    data['total_photos'] = this.totalPhotos;
-    data['total_promoted_photos'] = this.totalPromotedPhotos;
-    data['total_illustrations'] = this.totalIllustrations;
-    data['total_promoted_illustrations'] = this.totalPromotedIllustrations;
-    data['accepted_tos'] = this.acceptedTos;
-    data['for_hire'] = this.forHire;
-    if (this.social != null) {
-      data['social'] = this.social!.toJson();
+    data['instagram_username'] = instagramUsername;
+    data['total_collections'] = totalCollections;
+    data['total_likes'] = totalLikes;
+    data['total_photos'] = totalPhotos;
+    data['total_promoted_photos'] = totalPromotedPhotos;
+    data['total_illustrations'] = totalIllustrations;
+    data['total_promoted_illustrations'] = totalPromotedIllustrations;
+    data['accepted_tos'] = acceptedTos;
+    data['for_hire'] = forHire;
+    if (social != null) {
+      data['social'] = social!.toJson();
     }
     return data;
   }
@@ -318,10 +318,10 @@ class ProfileImage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['small'] = this.small;
-    data['medium'] = this.medium;
-    data['large'] = this.large;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['small'] = small;
+    data['medium'] = medium;
+    data['large'] = large;
     return data;
   }
 }
@@ -330,7 +330,7 @@ class Social {
   String? instagramUsername;
   String? portfolioUrl;
   String? twitterUsername;
-  Null? paypalEmail;
+  Null paypalEmail;
 
   Social({this.instagramUsername, this.portfolioUrl, this.twitterUsername, this.paypalEmail});
 
@@ -342,11 +342,11 @@ class Social {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['instagram_username'] = this.instagramUsername;
-    data['portfolio_url'] = this.portfolioUrl;
-    data['twitter_username'] = this.twitterUsername;
-    data['paypal_email'] = this.paypalEmail;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['instagram_username'] = instagramUsername;
+    data['portfolio_url'] = portfolioUrl;
+    data['twitter_username'] = twitterUsername;
+    data['paypal_email'] = paypalEmail;
     return data;
   }
 }
