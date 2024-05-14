@@ -56,7 +56,7 @@ class SqlHelper {
     await data.query("DELETE FROM rules");
   }
 
-  static Future<Favorites?> getById(int? id) async {
+  static Future<Favorites?> getById(int? id) async {//
     try {
       final data = await SqlHelper.base();
       final list = await data.query("rules", where: "userId = ?", whereArgs: ["$id"]);
