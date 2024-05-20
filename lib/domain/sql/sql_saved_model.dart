@@ -1,43 +1,39 @@
-class Favorites {
-  String? id, color, altDescription, image, userId, userName, name, firstName, lastName, bio;
+class SavedModels {
+  String? id;
+  String? image;
+  double? wid;
+  double? heights;
+  int? likes;
+  String saved = "false";
+  String followed = "false";
 
-  Favorites({
-    required this.name,
+  SavedModels({
     required this.id,
-    required this.altDescription,
-    required this.bio,
-    required this.color,
-    required this.firstName,
     required this.image,
-    required this.lastName,
-    required this.userId,
-    required this.userName,
+    required this.heights,
+    required this.likes,
+    required this.wid,
+    required this.saved,
   });
 
-  Favorites.fromJSon(Map<String, dynamic> json)
-      : name = json["name"],
-        id = json["id"],
-        altDescription = json["altDescription"],
-        bio = json["bio"],
-        color = json["color"],
-        firstName = json["firstName"],
+  SavedModels.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
         image = json["image"],
-        lastName = json["lastName"],
-        userId = json["userId"],
-        userName = json["userName"];
+        wid = json["wid"],
+        heights = json["heights"],
+        saved = json["saved"],
+        followed = json["followed"],
+        likes = json["likes"];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data["id"] = id;
-    data["name"] = name;
-    data["altDescription"] = altDescription;
-    data["bio"] = bio;
-    data["color"] = color;
-    data["firstName"] = firstName;
     data["image"] = image;
-    data["lastName"] = lastName;
-    data["userId"] = userId;
-    data["userName"] = userName;
+    data["wid"] = wid;
+    data["heights"] = heights;
+    data["likes"] = likes;
+    data["saved"] = saved;
+    data["followed"] = followed;
     return data;
   }
 }

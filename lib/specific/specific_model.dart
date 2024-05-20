@@ -7,30 +7,32 @@ class Pins {
   String? firstName;
   String? bio;
   String? image;
-  String? assetType;
   String? slug;
-  String? blurHash;
   double? wid;
   double? heights;
   int? likes;
   User? user;
+  String? updatedAt;
+  int? totalPromotedPhotos;
+  int? totalIllustrations;
+  int? totalPromotedIllustrations;
 
-
-  Pins({
-    required this.name,
-    required this.id,
-    required this.bio,
-    required this.firstName,
-    required this.username,
-    required this.image,
-    required this.assetType,
-    required this.wid,
-    required this.heights,
-    required this.slug,
-    required this.blurHash,
-    required this.likes,
-    required this.user,
-  });
+  Pins(
+      {required this.name,
+      required this.id,
+      required this.bio,
+      required this.firstName,
+      required this.username,
+      required this.image,
+      required this.wid,
+      required this.heights,
+      required this.slug,
+      required this.likes,
+      required this.user,
+      required this.updatedAt,
+      required this.totalIllustrations,
+      required this.totalPromotedPhotos,
+      required this.totalPromotedIllustrations});
 
   Pins.fromJson(Map<String, dynamic> json)
       : name = json["name"],
@@ -38,13 +40,15 @@ class Pins {
         bio = json["bio"],
         firstName = json["firstName"],
         image = json["image"],
-        assetType = json["assetType"],
         username = json["username"],
         wid = json["wid"],
         slug = json["slug"],
-        blurHash = json["blurHash"],
         likes = json["likes"],
         user = json["user"],
+        updatedAt = json["updatedAt"],
+        totalIllustrations = json["totalIllustrations"],
+        totalPromotedPhotos = json["totalPromotedPhotos"],
+        totalPromotedIllustrations = json["totalPromotedIllustrations"],
         heights = json["heights"];
 
   Map<String, dynamic> toJson() {
@@ -55,12 +59,14 @@ class Pins {
     data["firstName"] = firstName;
     data["username"] = username;
     data["image"] = image;
-    data["assetType"] = assetType;
     data["wid"] = wid;
     data["slug"] = slug;
-    data["blurHash"] = blurHash;
     data["likes"] = likes;
     data["user"] = user;
+    data["updatedAt"] = updatedAt;
+    data["totalIllustrations"] = totalIllustrations;
+    data["totalPromotedPhotos"] = totalPromotedPhotos;
+    data["totalPromotedIllustrations"] = totalPromotedIllustrations;
     data["heights"] = heights;
     return data;
   }

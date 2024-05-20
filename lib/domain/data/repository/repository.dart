@@ -1,6 +1,5 @@
 import 'package:pinterest/map/pins_mapper.dart';
 import 'package:pinterest/specific/specific_model.dart';
-
 import '../../../core/constants/constants.dart';
 import '../network/api_service.dart';
 

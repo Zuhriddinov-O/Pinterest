@@ -1,33 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pinterest/domain/sql/sql_helper.dart';
+import 'package:pinterest/domain/sql/sql_saved_model.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../../../domain/data/comments/model/model.dart';
 import '../../../domain/data/comments/respository/comment_repository.dart';
 import '../../../specific/specific_model.dart';
 import '../../../widgets/successCardField.dart';
 import '../../view_model/home_vm.dart';
 
-class HomePageDetails extends StatefulWidget {
-  const HomePageDetails({super.key, required this.pins});
+class PageDetails extends StatefulWidget {
+  const PageDetails({super.key, required this.pins});
 
   final Pins pins;
 
   @override
-  State<HomePageDetails> createState() => _HomePageDetailsState();
+  State<PageDetails> createState() => _PageDetailsState();
 }
 
-class _HomePageDetailsState extends State<HomePageDetails> {
+class _PageDetailsState extends State<PageDetails> {
   final _api = CommentsRepositoryImpl();
+  bool saveImage = false;
+  bool followUser = false;
 
   @override
   void initState() {
+    _checkState();
     Provider.of<HomeViewModel>(context, listen: false).fetchPhotoList(3);
     Provider.of<HomeViewModel2>(context, listen: false).fetchPhotoList2(4);
     super.initState();
+  }
+
+  void _checkState() async {
+    saveImage = await SqlHelper.getById(int.parse(widget.pins.id!)) != null;
+    setState(() {});
   }
 
   @override
@@ -175,34 +183,46 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                                   ),
                                   ElevatedButton(
                                     style: ButtonStyle(
-                                        backgroundColor: MaterialStatePropertyAll(widget.pins.user?.forHire == true
-                                            ? CupertinoColors.destructiveRed
-                                            : Colors.grey[800]),
+                                        backgroundColor: MaterialStatePropertyAll(
+                                            saveImage == true ? CupertinoColors.destructiveRed : Colors.grey[800]),
                                         foregroundColor: const MaterialStatePropertyAll(CupertinoColors.white),
                                         alignment: Alignment.center,
                                         fixedSize: MaterialStatePropertyAll(
                                             Size(width > 600 ? 120 : 100, width > 600 ? 40 : 30))),
-                                    child: Text(widget.pins.user?.forHire == true ? "Save" : "Saved",
+                                    child: Text(saveImage == true ? "Save" : "Saved",
                                         textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
                                     onPressed: () {
-                                      setState(() => widget.pins.user?.forHire = !widget.pins.user!.forHire!);
-                                      debugPrint(widget.pins.user?.forHire.toString());
+                                      if (saveImage == false) {
+                                        saveImage = true;
+                                        SqlHelper.saveImages(SavedModels(
+                                          id: null,
+                                          image: widget.pins.image,
+                                          heights: widget.pins.heights,
+                                          likes: widget.pins.likes,
+                                          wid: widget.pins.wid,
+                                          saved: "true",
+                                        ));
+                                        setState(() {});
+                                      } else {
+                                        saveImage = false;
+                                        setState(() {});
+                                        SqlHelper.deleteModels(int.parse(widget.pins.id!));
+                                      }
+                                      setState(() {});
+                                      print("saveImage -------------------------$saveImage");
                                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
-                                          backgroundColor: widget.pins.user?.forHire == true
-                                              ? CupertinoColors.white
-                                              : Colors.grey[800],
+                                          backgroundColor: saveImage == true ? CupertinoColors.white : Colors.grey[800],
                                           content: Text(
-                                            widget.pins.user?.forHire == true ? "Save" : "Saved",
+                                            saveImage == true ? "Save" : "Saved",
                                             style: TextStyle(
-                                              color: widget.pins.user?.forHire == false
-                                                  ? CupertinoColors.white
-                                                  : Colors.grey[800],
+                                              color: saveImage == false ? CupertinoColors.white : Colors.grey[800],
                                             ),
                                           ),
                                         ),
                                       );
+                                      // setState(() {});
                                     },
                                   ),
                                   width >= 550
@@ -248,36 +268,28 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                                       ? ElevatedButton(
                                           style: ButtonStyle(
                                               backgroundColor: MaterialStatePropertyAll(
-                                                  widget.pins.user?.acceptedTos == false
-                                                      ? Colors.grey[800]
-                                                      : CupertinoColors.white),
+                                                  followUser == false ? Colors.grey[800] : CupertinoColors.white),
                                               foregroundColor: MaterialStatePropertyAll(
-                                                  widget.pins.user?.acceptedTos == false
-                                                      ? CupertinoColors.white
-                                                      : Colors.grey[800]),
+                                                  followUser == false ? CupertinoColors.white : Colors.grey[800]),
                                               alignment: Alignment.center,
                                               fixedSize: MaterialStatePropertyAll(Size(
                                                 width > 750 ? 120 : 80,
                                                 width > 750 ? 40 : 25,
                                               ))),
-                                          child: Text(widget.pins.user?.acceptedTos == false ? "Followed" : "Follow",
+                                          child: Text(followUser == false ? "Followed" : "Follow",
                                               textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
                                           onPressed: () {
-                                            setState(
-                                                () => widget.pins.user?.acceptedTos = !widget.pins.user!.acceptedTos!);
-                                            debugPrint(widget.pins.user?.acceptedTos.toString());
+                                            setState(() => followUser = !followUser);
+                                            debugPrint(followUser.toString());
                                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                             ScaffoldMessenger.of(context).showSnackBar(
                                               SnackBar(
-                                                backgroundColor: widget.pins.user?.acceptedTos == false
-                                                    ? Colors.grey[800]
-                                                    : CupertinoColors.white,
+                                                backgroundColor:
+                                                    followUser == false ? Colors.grey[800] : CupertinoColors.white,
                                                 content: Text(
-                                                  widget.pins.user?.acceptedTos == true ? "Follow" : "Followed",
+                                                  followUser == true ? "Follow" : "Followed",
                                                   style: TextStyle(
-                                                    color: widget.pins.user?.acceptedTos == true
-                                                        ? Colors.grey[800]
-                                                        : Colors.white,
+                                                    color: followUser == true ? Colors.grey[800] : Colors.white,
                                                   ),
                                                 ),
                                               ),
@@ -303,33 +315,25 @@ class _HomePageDetailsState extends State<HomePageDetails> {
                                       ? ElevatedButton(
                                           style: ButtonStyle(
                                               backgroundColor: MaterialStatePropertyAll(
-                                                  widget.pins.user?.acceptedTos == false
-                                                      ? Colors.grey[800]
-                                                      : CupertinoColors.white),
+                                                  followUser == false ? Colors.grey[800] : CupertinoColors.white),
                                               foregroundColor: MaterialStatePropertyAll(
-                                                  widget.pins.user?.acceptedTos == false
-                                                      ? CupertinoColors.white
-                                                      : Colors.grey[800]),
+                                                  followUser == false ? CupertinoColors.white : Colors.grey[800]),
                                               alignment: Alignment.center,
                                               fixedSize: const MaterialStatePropertyAll(Size(120, 40))),
-                                          child: Text(widget.pins.user?.acceptedTos == false ? "Followed" : "Follow",
+                                          child: Text(followUser == false ? "Followed" : "Follow",
                                               textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
                                           onPressed: () {
-                                            setState(
-                                                () => widget.pins.user?.acceptedTos = !widget.pins.user!.acceptedTos!);
-                                            debugPrint(widget.pins.user?.acceptedTos.toString());
+                                            setState(() => followUser = !followUser);
+                                            debugPrint(followUser.toString());
                                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                             ScaffoldMessenger.of(context).showSnackBar(
                                               SnackBar(
-                                                backgroundColor: widget.pins.user?.acceptedTos == false
-                                                    ? Colors.grey[800]
-                                                    : CupertinoColors.white,
+                                                backgroundColor:
+                                                    followUser == false ? Colors.grey[800] : CupertinoColors.white,
                                                 content: Text(
-                                                  widget.pins.user?.acceptedTos == true ? "Follow" : "Followed",
+                                                  followUser == true ? "Follow" : "Followed",
                                                   style: TextStyle(
-                                                    color: widget.pins.user?.acceptedTos == true
-                                                        ? Colors.grey[800]
-                                                        : Colors.white,
+                                                    color: followUser == true ? Colors.grey[800] : Colors.white,
                                                   ),
                                                 ),
                                               ),

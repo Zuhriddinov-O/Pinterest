@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:pinterest/presentation/pages/home_page/home_page_details.dart';
+import 'package:pinterest/presentation/pages/home_page/page_details.dart';
 import 'package:pinterest/presentation/view_model/home_vm.dart';
 import 'package:pinterest/widgets/search_page_shimmer.dart';
 import 'package:provider/provider.dart';
@@ -159,7 +159,7 @@ class _SearchPageState extends State<SearchPage> {
                                     );
                                   },
                                   openBuilder: (context, action) {
-                                    return HomePageDetails(pins: photo);
+                                    return PageDetails(pins: photo);
                                   },
                                 ),
                               ),

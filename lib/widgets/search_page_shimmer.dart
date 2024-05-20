@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
-import '../presentation/pages/home_page/home_page_details.dart';
+import '../presentation/pages/home_page/page_details.dart';
 import '../specific/specific_model.dart';
 
 searchPageShimmer(List<Pins> productList, context) {
@@ -64,7 +64,7 @@ searchPageShimmer(List<Pins> productList, context) {
                             );
                           },
                           openBuilder: (context, action) {
-                            return HomePageDetails(pins: photo);
+                            return PageDetails(pins: photo);
                           },
                         ),
                       ),

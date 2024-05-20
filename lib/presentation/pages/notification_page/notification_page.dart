@@ -20,33 +20,31 @@ class _NotificationPageState extends State<NotificationPage> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return DefaultTabController(
-      length: 1,
+      length: 2,
       initialIndex: initialIndex,
       child: Scaffold(
         backgroundColor: CupertinoColors.darkBackgroundGray,
-        appBar: AppBar(
-          title: TabBar(
-            // automaticIndicatorColorAdjustment: true,
-            controller: tabController,
-            labelColor: CupertinoColors.white,
-            indicatorColor: CupertinoColors.white,
-            dividerColor: Colors.transparent,
-            overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-            unselectedLabelColor: CupertinoColors.white,
-            automaticIndicatorColorAdjustment: true,
-            onTap: (value) {
-              setState(() {
-                initialIndex = value;
-                value = value == 0 ? value = 1 : 0;
-              });
-            },
-            tabs: const [
-              Tab(
-                child: Text("Updates"),
-              ),
-              Tab(child: Text("Inbox")),
-            ],
-          ),
+        appBar: TabBar(
+          // automaticIndicatorColorAdjustment: true,
+          controller: tabController,
+          labelColor: CupertinoColors.white,
+          indicatorColor: CupertinoColors.white,
+          dividerColor: Colors.transparent,
+          overlayColor: const MaterialStatePropertyAll(Colors.transparent),
+          unselectedLabelColor: CupertinoColors.white,
+          automaticIndicatorColorAdjustment: true,
+          onTap: (value) {
+            setState(() {
+              initialIndex = value;
+              value = value == 0 ? value = 1 : 0;
+            });
+          },
+          tabs: const [
+            Tab(
+              child: Text("Updates"),
+            ),
+            Tab(child: Text("Inbox")),
+          ],
         ),
         body: TabBarView(
             dragStartBehavior: DragStartBehavior.start,

@@ -2,9 +2,7 @@ import "package:dio/dio.dart" hide Headers;
 import "package:pinterest/domain/data/model/model.dart";
 import "package:pretty_dio_logger/pretty_dio_logger.dart";
 import "package:retrofit/retrofit.dart";
-
 import "../../../core/constants/constants.dart";
-
 part 'api_service.g.dart';
 
 @RestApi()

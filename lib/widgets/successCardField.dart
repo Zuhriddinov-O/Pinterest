@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:share_plus/share_plus.dart';
-import '../presentation/pages/home_page/home_page_details.dart';
+import '../presentation/pages/home_page/page_details.dart';
 import '../specific/specific_model.dart';
 
 successField(List<Pins> pins, List<Pins> pins2, context) {
@@ -70,7 +70,7 @@ successField(List<Pins> pins, List<Pins> pins2, context) {
                   );
                 },
                 openBuilder: (context, actions) {
-                  return HomePageDetails(pins: pin);
+                  return PageDetails(pins: pin);
                 }),
           ),
           Padding(
@@ -133,7 +133,7 @@ successField(List<Pins> pins, List<Pins> pins2, context) {
                   );
                 },
                 openBuilder: (context, actions) {
-                  return HomePageDetails(pins: pin2);
+                  return PageDetails(pins: pin2);
                 }),
           ),
         ],

@@ -10,13 +10,15 @@ extension Map on PinPhotos {
       firstName: user?.firstName,
       username: user?.username,
       image: urls?.full,
-      assetType: assetType,
       wid: width,
       heights: height,
       slug: slug,
-      blurHash: blurHash,
       likes: likes,
       user: user,
+      updatedAt: updatedAt,
+      totalIllustrations: user?.totalIllustrations,
+      totalPromotedPhotos: user?.totalPromotedPhotos,
+      totalPromotedIllustrations: user?.totalPromotedIllustrations,
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../home_page/home_page.dart';
 import '../notification_page/notification_page.dart';
 import '../saved_page/saved_page.dart';
 import '../search_page/search_page.dart';
@@ -14,10 +13,10 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> with ChangeNotifier {
   List pages = const [
-    HomePage(),
-    SearchPage(),
-    NotificationPage(),
     SavedPage(),
+    SearchPage(),
+    // NotificationPage(),
+    // HomePage(),
   ];
   int pageIndex = 0;
 
