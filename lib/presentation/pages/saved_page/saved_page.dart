@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinterest/presentation/pages/main_page/main_page.dart';
 import 'package:pinterest/widgets/search_bar.dart';
 
 class SavedPage extends StatefulWidget {

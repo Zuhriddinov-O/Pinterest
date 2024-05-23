@@ -1,6 +1,5 @@
 import "package:flutter/cupertino.dart";
 import "package:pinterest/domain/sql/sql_saved_model.dart";
-import "package:sqflite/sql.dart";
 import "package:sqflite/sqflite.dart" as sql;
 import 'package:sqflite/sqlite_api.dart';
 
