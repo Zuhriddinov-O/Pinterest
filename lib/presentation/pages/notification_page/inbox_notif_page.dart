@@ -12,6 +12,7 @@ class _InboxNotifPageState extends State<InboxNotifPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+
       backgroundColor: CupertinoColors.darkBackgroundGray,
       body: Center(child: Text("Inbox", style: TextStyle(color: CupertinoColors.white))),
     );

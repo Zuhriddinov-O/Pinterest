@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinterest/presentation/view_model/home_vm.dart';
+import 'package:pinterest/widgets/shimmer_updates_page.dart';
 import 'package:pinterest/widgets/updated_list.dart';
 import 'package:provider/provider.dart';
+
 import '../../../specific/specific_model.dart';
 
 class UpdatesNotifPage extends StatefulWidget {
@@ -13,10 +15,17 @@ class UpdatesNotifPage extends StatefulWidget {
 }
 
 class _UpdatesNotifPageState extends State<UpdatesNotifPage> {
+  bool isLoading = true;
+
   @override
   void initState() {
     Provider.of<HomeViewModel>(context, listen: false).fetchPhotoList(1);
     Provider.of<HomeViewModel2>(context, listen: false).fetchPhotoList2(2);
+    Future.delayed(const Duration(seconds: 3)).then((value) {
+      setState(() {
+        isLoading = false;
+      });
+    });
     super.initState();
   }
 
@@ -24,6 +33,8 @@ class _UpdatesNotifPageState extends State<UpdatesNotifPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaWidth = MediaQuery.of(context).size.width;
+    final mediaHeight = MediaQuery.of(context).size.height;
     final List<Pins> totalImages = [];
     final list1 = Provider.of<HomeViewModel>(context, listen: true).pinList;
     final list2 = Provider.of<HomeViewModel2>(context, listen: true).pinList2;
@@ -32,7 +43,7 @@ class _UpdatesNotifPageState extends State<UpdatesNotifPage> {
 
     return Scaffold(
       backgroundColor: CupertinoColors.darkBackgroundGray,
-      body: updatedList(totalImages),
+      body: isLoading ? shimmerUpdates(context) : updatedList(totalImages, mediaWidth, mediaHeight),
     );
   }
 }
