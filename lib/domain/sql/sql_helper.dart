@@ -14,7 +14,7 @@ class SqlHelper {
       likes INTEGER NOT NULL,
       saved Text NOT NULL,
       followed TEXT NOT NULL,
-      )
+      );
       """);
   }
 
